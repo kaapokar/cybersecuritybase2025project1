@@ -23,10 +23,12 @@ def add_poem(request):
         form = PoemForm()
     return render(request, 'poems/add_poem.html', {'form': form})
 
+# FLAW 1: A01:2021 – Broken Access Control
 @login_required
 def delete_poem(request, poem_id):
     poem = get_object_or_404(Poem, id=poem_id)
-    
+
+# These line of code should be added so only the poem author can delete the poem
    # if poem.author != request.user:
     #    return HttpResponseForbidden("You are not allowed to delete this poem.")
 
