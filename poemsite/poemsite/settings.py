@@ -9,30 +9,31 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-import os
+#import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'security_file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'security.log'),
-        },
-    },
-    'loggers': {
-        'django.security': {
-            'handlers': ['security_file'],
-            'level': 'WARNING',
-            'propagate': False,
-        },
-    },
-}
+# FLAW 4 A09:2021 – Security Logging and Monitoring Failures: 
+#LOGGING = {
+#    'version': 1,
+#    'disable_existing_loggers': False,
+#    'handlers': {
+#        'security_file': {
+#            'level': 'WARNING',
+#            'class': 'logging.FileHandler',
+#            'filename': os.path.join(BASE_DIR, 'security.log'),
+#        },
+#    },
+#    'loggers': {
+#        'django.security': {
+#            'handlers': ['security_file'],
+#            'level': 'WARNING',
+#            'propagate': False,
+#        },
+#    },
+#}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/

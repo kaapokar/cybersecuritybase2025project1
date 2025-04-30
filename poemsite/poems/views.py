@@ -10,7 +10,7 @@ from django.contrib.auth.signals import user_login_failed
 from django.dispatch import receiver
 
 # FLAW 4 A09:2021 – Security Logging and Monitoring Failures: 
-#logger = logging.getLogger('django.security')  
+logger = logging.getLogger('django.security')  
 
 #@receiver(user_login_failed)
 #def log_login_failed(sender, credentials, request, **kwargs):
@@ -42,8 +42,10 @@ def delete_poem(request, poem_id):
     poem = get_object_or_404(Poem, id=poem_id)
 
 # These line of code should be added so only the poem author can delete the poem
-   # if poem.author != request.user:
-    #    return HttpResponseForbidden("You are not allowed to delete this poem.")
+    #if poem.author != request.user:
+    # FLAW 4: A09:2021 – Security Logging and Monitoring Failures. With this unauthorized delete attempts are logged.
+     #   logger.warning(f"User '{request.user}' attempted unauthorized delete on poem {poem.id}")
+      #  return HttpResponseForbidden("You are not allowed to delete this poem.")
 
     if request.method == 'POST':
         poem.delete()
@@ -55,10 +57,13 @@ def poem_detail(request, poem_id):
     poem = get_object_or_404(Poem, id=poem_id)
     return render(request, 'poems/poem_detail.html', {'poem': poem})
 
-@login_required
+# FLAW 5: A03:2021 – Injection and A02:2021 – Cryptographic Failures
+#@login_required <--- add this line so only logged in users can use this function
 def unsafe_search(request):
     title = request.GET.get('q', '')
     with connection.cursor() as cursor:
+        #next line of code must be replcaed with cursor.execute("SELECT * FROM poems_poem WHERE title = %s", [title])
+        #that way you can't get the poems
         cursor.execute(f"SELECT * FROM poems_poem WHERE title = '{title}'")
         results = cursor.fetchall()
     return HttpResponse(str(results))

@@ -2,3 +2,4 @@ FAILED login for 'admin' from IP 127.0.0.1
 FAILED login for 'admin' from IP 127.0.0.1
 FAILED login for 'bob' from IP 127.0.0.1
 FAILED login for 'admin' from IP 127.0.0.1
+User 'admin' attempted unauthorized delete on poem 15
