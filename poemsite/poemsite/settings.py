@@ -22,8 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-jrpqi$(5=d$3s*9=5#ny*c1e^i2(=lwi_t%)-sfam+lgf4mklt'
 
+
+# FLAW 3: A05:2021 – Security Misconfiguration
+# Debug should only be left as True while developing. Fix is to set it false
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True 
+# DEBUG = False
 
 ALLOWED_HOSTS = []
 
