@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden
+from django.views.decorators.csrf import csrf_exempt
 from .models import Poem
 from .forms import PoemForm
 from django.db import connection
@@ -11,6 +12,7 @@ def home(request):
     return render(request, 'poems/home.html', {'poems': poems})
 
 @login_required
+@csrf_exempt # FLAW 2: this line should be removed
 def add_poem(request):
     if request.method == 'POST':
         form = PoemForm(request.POST)

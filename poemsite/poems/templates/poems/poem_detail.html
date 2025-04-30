@@ -3,7 +3,7 @@
 <p>{{ poem.body }}</p>
 
  
-<!-- FLAW 1: A01:2021 – Broken Access Control, addiotionally you can could add an if statemen that only the author of poem can see the delete button-->
+<!-- FLAW 1: A01:2021 – Broken Access Control, addiotionally you can could add an if statemen that only the author of poem can see the-->
 
 {# {% if poem.author == user %} #}
   <form action="{% url 'delete_poem' poem.id %}" method="post">

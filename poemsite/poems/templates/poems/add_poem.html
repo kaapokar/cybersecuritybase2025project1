@@ -1,6 +1,6 @@
 <h2>Add a New Poem</h2>
 <form method="post">
-  {% csrf_token %}
+  <!-- FLAW 2: This line should be added {% csrf_token %} -->
   {{ form.as_p }}
   <button type="submit">Submit</button>
 </form>
