@@ -12,7 +12,6 @@ def home(request):
     return render(request, 'poems/home.html', {'poems': poems})
 
 @login_required
-@csrf_exempt # FLAW 2: this line should be removed
 def add_poem(request):
     if request.method == 'POST':
         form = PoemForm(request.POST)
