@@ -1,0 +1,17 @@
+
+<h2>Poems</h2>
+<a href="{% url 'add_poem' %}">Add Poem</a> | 
+<form action="{% url 'logout' %}" method="post" style="display:inline;">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
+<ul>
+  {% for poem in poems %}
+    <li>
+      <strong>
+        <a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a>
+      </strong> by {{ poem.author.username }}
+    </li>
+  {% endfor %}
+</ul>

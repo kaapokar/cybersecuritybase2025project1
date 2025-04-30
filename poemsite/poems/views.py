@@ -1,0 +1,49 @@
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseForbidden
+from .models import Poem
+from .forms import PoemForm
+from django.db import connection
+
+@login_required
+def home(request):
+    poems = Poem.objects.all().order_by('-created_at')
+    return render(request, 'poems/home.html', {'poems': poems})
+
+@login_required
+def add_poem(request):
+    if request.method == 'POST':
+        form = PoemForm(request.POST)
+        if form.is_valid():
+            poem = form.save(commit=False)
+            poem.author = request.user
+            poem.save()
+            return redirect('/')
+    else:
+        form = PoemForm()
+    return render(request, 'poems/add_poem.html', {'form': form})
+
+@login_required
+def delete_poem(request, poem_id):
+    poem = get_object_or_404(Poem, id=poem_id)
+    
+   # if poem.author != request.user:
+    #    return HttpResponseForbidden("You are not allowed to delete this poem.")
+
+    if request.method == 'POST':
+        poem.delete()
+        return redirect('/')
+    return render(request, 'poems/confirm_delete.html', {'poem': poem})
+
+@login_required
+def poem_detail(request, poem_id):
+    poem = get_object_or_404(Poem, id=poem_id)
+    return render(request, 'poems/poem_detail.html', {'poem': poem})
+
+@login_required
+def unsafe_search(request):
+    title = request.GET.get('q', '')
+    with connection.cursor() as cursor:
+        cursor.execute(f"SELECT * FROM poems_poem WHERE title = '{title}'")
+        results = cursor.fetchall()
+    return HttpResponse(str(results))

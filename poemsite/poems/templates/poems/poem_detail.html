@@ -1,0 +1,13 @@
+<h2>{{ poem.title }}</h2>
+<p><em>by {{ poem.author.username }}</em></p>
+<p>{{ poem.body }}</p>
+
+{# {% if poem.author == user %} #}
+  <form action="{% url 'delete_poem' poem.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" style="color:red;">Delete this poem</button>
+  </form>
+{# {% endif %} #}
+
+
+<a href="/">Back to list</a>
