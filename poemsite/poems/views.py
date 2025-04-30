@@ -5,6 +5,18 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Poem
 from .forms import PoemForm
 from django.db import connection
+import logging
+from django.contrib.auth.signals import user_login_failed
+from django.dispatch import receiver
+
+# FLAW 4 A09:2021 – Security Logging and Monitoring Failures: 
+#logger = logging.getLogger('django.security')  
+
+#@receiver(user_login_failed)
+#def log_login_failed(sender, credentials, request, **kwargs):
+#    username = credentials.get('username', 'UNKNOWN')
+#    ip = request.META.get('REMOTE_ADDR', 'unknown')
+#    logger.warning(f"FAILED login for '{username}' from IP {ip}")
 
 @login_required
 def home(request):
