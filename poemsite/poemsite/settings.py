@@ -45,7 +45,7 @@ SECRET_KEY = 'django-insecure-jrpqi$(5=d$3s*9=5#ny*c1e^i2(=lwi_t%)-sfam+lgf4mklt
 # FLAW 3: A05:2021 – Security Misconfiguration
 # Debug should only be left as True while developing. Fix is to set it false
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = True
 # DEBUG = False
 
 ALLOWED_HOSTS = []
@@ -78,7 +78,7 @@ ROOT_URLCONF = 'poemsite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'poems/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,6 +117,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        # FLAW 2: A07:2021 - Add this line to enhance password security:         
+       #  'OPTIONS': {
+        #    'min_length': 12, 
+        #}
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',

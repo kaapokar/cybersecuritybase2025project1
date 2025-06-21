@@ -8,6 +8,7 @@ from django.db import connection
 import logging
 from django.contrib.auth.signals import user_login_failed
 from django.dispatch import receiver
+#from .forms import RegisterForm FLAW 2: A07:2021 - ad this line
 
 # FLAW 4 A09:2021 – Security Logging and Monitoring Failures: 
 logger = logging.getLogger('django.security')  
@@ -67,3 +68,14 @@ def unsafe_search(request):
         cursor.execute(f"SELECT * FROM poems_poem WHERE title = '{title}'")
         results = cursor.fetchall()
     return HttpResponse(str(results))
+
+# FLAW 2: A07:2021 - Registration happens now with a post rather via python shell
+#def register(request):
+ #   if request.method == 'POST':
+  #      form = RegisterForm(request.POST)
+  #      if form.is_valid():
+  #          form.save()
+  #          return redirect('login')
+  #  else:
+  #      form = RegisterForm()
+  #  return render(request, 'registration/register.html', {'form': form})
